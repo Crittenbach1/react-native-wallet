@@ -9,3 +9,4 @@ files included in backend setup:
   * config/db.js
   *.env
   *server.js
+  *package.json
