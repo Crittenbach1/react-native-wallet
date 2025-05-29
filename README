@@ -4,3 +4,8 @@
 //database used is Neon
 
 //Usermanagement platform: Clerk
+
+files included in backend setup:
+  * config/db.js
+  *.env
+  *server.js
