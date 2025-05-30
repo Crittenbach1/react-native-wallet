@@ -31,7 +31,27 @@ async function initDB() {
         process.exit(1); // status code 1 means failure, 0 means success
     }
 }
- 
+
+app.get("/", (req, res) => {
+    res.send("its working");
+});
+
+app.get("/api/transactions/:userId", async(req,res) => {
+    try {
+      const {userId} = req.params;
+
+      const transactions = await sql`
+        SELECT * FROM transactions WHERE user_id = ${userId} ORDER BY created_at DESC
+      `;
+      
+      res.status(200).json(transactions);
+    } catch (error) {
+        console.log("Error getting the transactions", error)
+        res.status(500).json({message:"Internal server error"})
+    }
+})
+
+
 app.post("/api/transactions", async (req, res) => {
     try {
         const {title,amount,category,user_id}=req.body
@@ -53,12 +73,13 @@ app.post("/api/transactions", async (req, res) => {
     }
 })
 
+
+
 initDB().then(() => {
     app.listen(PORT, () => {
         console.log("Server is running on PORT:",PORT);
     });
 });
-
 
 
 console.log("my port:", process.env.PORT);
