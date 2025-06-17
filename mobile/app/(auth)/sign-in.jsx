@@ -37,6 +37,7 @@ export default function Page() {
         console.error(JSON.stringify(signInAttempt, null, 2));
       }
     } catch (err) {
+      console.error("Sign-in error:", JSON.stringify(err, null, 2));
       if (err.errors?.[0]?.code === "form_password_incorrect") {
         setError("Password is incorrect. Please try again.");
       } else {
